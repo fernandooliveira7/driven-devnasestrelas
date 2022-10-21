@@ -1,0 +1,187 @@
+<head>
+  <title>Jogo da força</title>
+  <meta charset="utf-8" />
+
+  <style>
+    @font-face {
+      font-family: Starjedi;
+      src: url("assets/Starjedi.ttf");
+    }
+
+    .boneco {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      position: relative;
+    }
+
+    .darth-vader {
+      width: 300px;
+    }
+
+    .cabeca {
+      background: #0e0e13;
+      width: 300px;
+      height: 120px;
+
+      position: absolute;
+      top: 0;
+    }
+
+    .braco-esquerdo {
+      background: #0e0e13;
+      width: 100px;
+      height: 160px;
+
+      position: absolute;
+      left: 0;
+    }
+
+    .torso {
+      background: #0e0e13;
+      width: 100px;
+      height: 160px;
+
+      position: absolute;
+      left: 100px;
+    }
+
+    .braco-direito {
+      background: #0e0e13;
+      width: 100px;
+      height: 160px;
+
+      position: absolute;
+      right: 0;
+    }
+
+    .perna-esquerda {
+      background: #0e0e13;
+      width: 155px;
+      height: 160px;
+
+      position: absolute;
+      left: 0;
+      top: 190px;
+    }
+
+    .perna-direita {
+      background: #0e0e13;
+      width: 155px;
+      height: 160px;
+
+      position: absolute;
+      right: 0;
+      top: 190px;
+    }
+
+    .mostrar {
+      background: transparent;
+    }
+
+    body {
+      background: #0e0e13;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    h1 {
+      color: green;
+      font-family: Starjedi;
+    }
+
+    .darth-vader {
+      width: 300px;
+    }
+
+    .palavra {
+      color: green;
+      font-size: 42px;
+    }
+
+    .letra {
+      border: 1px solid green;
+    }
+
+    button {
+      background: blue;
+      color: white;
+      border: 0;
+      border-radius: 4px;
+      padding: 12px 24px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>jogo da força</h1>
+  <div class="boneco">
+    <img src="assets/darth-vader.png" class="darth-vader" />
+    <div class="parte-do-boneco cabeca mostrar"></div>
+    <div class="parte-do-boneco braco-esquerdo mostrar"></div>
+    <div class="parte-do-boneco torso mostrar"></div>
+    <div class="parte-do-boneco braco-direito mostrar"></div>
+    <div class="parte-do-boneco perna-esquerda mostrar"></div>
+    <div class="parte-do-boneco perna-direita mostrar"></div>
+  </div>
+
+  <img src="assets/darth-vader.png" class="darth-vader" />
+  <p class="palavra">
+    <span class="letra">l</span><span class="letra">e</span
+    ><span class="letra">t</span><span class="letra">r</span
+    ><span class="letra">_</span>
+  </p>
+  <button>CHUTAR LETRA</button>
+  <img src="assets/driven.png" class="logo-driven" />
+  <script>
+     const partesDoBoneco = Array.from(document.querySelectorAll(".parte-do-boneco"));
+        const letrasChutadas = [];
+        const palavra = "MACBOOK";
+        let errosTotais = 0;
+        const errosMax = partesDoBoneco.length;
+        mostrarPalavra();
+        function mostrarPalavra(){
+            let palavraExibida = "";
+                for(let i = 0; i < palavra.length; i++){
+                    if(letrasChutadas.includes(palavra[i])){
+                        palavraExibida = palavraExibida + "<span class='letra'>" + palavra[i] + "</span>";
+                    } else if(palavra[i] === ' '){
+                        palavraExibida = palavraExibida + ' ';
+                    } else {
+                        palavraExibida = palavraExibida + "<span class='letra'>_</span>";
+                    }
+                }
+                document.querySelector(".palavra").innerHTML = palavraExibida;
+        }
+        function chutar(){
+            if(errosTotais === errosMax) return;
+            const chute = prompt("Qual seu chute?");
+            if(letrasChutadas.includes(chute)){
+                alert("Chute já efetuado.");
+                return;
+            }
+            letrasChutadas.push(chute);
+            if(palavra.includes(chute)){
+                mostrarPalavra();
+            } else {
+                errosTotais++;
+                for(let i = 0; i < errosTotais; i++){
+                    partesDoBoneco[i].classList.add("mostrar");
+                }
+                if(errosTotais === errosMax){
+                    alert("Você perdeu!");
+                } else {
+                    alert("Chute errado, tente novamente.");
+                }
+            }
+        }
+      </script>
+  </script>
+</body>
